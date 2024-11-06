@@ -1,0 +1,9 @@
+.vscode/*
+node_modules/*
+dist/*
+__tests__/*
+__pycache__/*
+*.pyc
+*.log
+*.log.*
+*.log-*
