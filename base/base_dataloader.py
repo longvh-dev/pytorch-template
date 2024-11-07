@@ -53,7 +53,7 @@ class BaseDataLoader(DataLoader):
     def _split_sampler(
         self, 
         split
-    ):
+    ) -> (torch.utils.data.Sampler, torch.utils.data.Sampler):
         """
         Split the dataset into train and validation sets
         """
@@ -75,7 +75,7 @@ class BaseDataLoader(DataLoader):
 
         return train_sampler, valid_sampler
 
-    def split_validation(self):
+    def split_validation(self) -> DataLoader:
         """
         Split the dataset into training and validation sets
         """
