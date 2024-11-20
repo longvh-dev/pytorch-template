@@ -1,0 +1,34 @@
+Global:
+  debug: False
+  use_gpu: True
+  epoch_num: 100
+  save_epoch_step: 5
+  save_model_dir: "output"
+  pretrained_model: "output/imagenet_unet/epoch_100"
+  checkpoint: "output/imagenet_unet/epoch_100"
+
+Optimizer:
+  name: "Adam"
+  beta1: 0.9
+  beta2: 0.999
+  lr: 0.001
+  weight_decay: 0.0001
+  regularizer:
+    name: L2
+    factor: 3.0e-5
+
+Loss:
+  name: "SoftmaxWithCrossEntropy"
+  epsilon: 1e-4
+
+Dataset:
+  name: "CIFAR10"
+  train:
+    batch_size: 64
+    num_workers: 1
+    shuffle: True
+  val:
+    batch_size: 64
+    num_workers: 1
+    shuffle: False
+  
