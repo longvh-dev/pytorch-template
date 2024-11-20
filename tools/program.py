@@ -105,3 +105,56 @@ def check_device(use_gpu: bool):
     except Exception as e:
         logger.error(e)
         sys.exit(1)
+
+def train(
+    config,
+    train_dataloader,
+    val_dataloader,
+    device,
+    model,
+    loss_fn,
+    optimizer,
+    lr_scheduler,
+    logger,
+):
+    epoch_num = config["Global"]["epoch_num"]
+    save_model_dir = config["Global"]["save_model_dir"]
+    save_epoch_step = config["Global"]["save_epoch_step"]
+
+    best_val_loss = float('inf')
+
+    for epoch in range(epoch_num+1):
+        # Training phase
+        model.train()
+        train_loss = 0
+        for batch_idx, (data, target) in enumerate(train_dataloader):
+            data, target = data.to(device), target.to(device)
+            optimizer.zero_grad()
+            output = model(data)
+            loss = loss_fn(output, target)
+            loss.backward()
+            optimizer.step()
+            train_loss += loss.item()
+        
+        # Validation phase
+        model.eval()
+        val_loss = 0
+        with torch.no_grad():
+            for data, target in val_dataloader:
+                data, target = data.to(device), target.to(device)
+                output = model(data)
+                val_loss += loss_fn(output, target).item()
+        
+        # Update learning rate
+        if lr_scheduler is not None:
+            lr_scheduler.step()
+        
+        # Log metrics
+        avg_train_loss = train_loss / len(train_dataloader)
+        avg_val_loss = val_loss / len(val_dataloader)
+        logger.info(f'Epoch {epoch+1}/{epoch_num} - Train Loss: {avg_train_loss:.4f}, Val Loss: {avg_val_loss:.4f}')
+        
+        # Save best model
+        if avg_val_loss < best_val_loss:
+            best_val_loss = avg_val_loss
+            torch.save(model.state_dict(), 'best_model.pth')
