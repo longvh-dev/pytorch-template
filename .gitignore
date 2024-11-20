@@ -7,3 +7,8 @@ __pycache__/*
 *.log
 *.log.*
 *.log-*
+.venv/*
+logs/*
+data/*
+*.sqlite3
+*.lock
