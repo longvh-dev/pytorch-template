@@ -1,7 +1,32 @@
-[project]
+[tool.poetry]
 name = "pytorch-template"
 version = "0.1.0"
-description = "Add your description here"
+description = "A simple pytorch template"
+authors = ["Vũ Hoàng Long <longvh.work@gmail.com>"]
+license = "MIT"
 readme = "README.md"
-requires-python = ">=3.11"
-dependencies = []
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.10"
+six = "^1.16.0"
+# torch = { version = "^2.5.1+cpu", source = "pytorch_cpu" }
+# torchvision = { version = "^0.20.1+cpu", source = "pytorch_cpu" }
+torch = { version = "^2.5.1+cu124", source = "pytorch_gpu" }
+torchvision = { version = "^0.20.1+cu124", source = "pytorch_gpu" }
+pyyaml = "^6.0.2"
+
+[tool.poetry.group.dev.dependencies]
+
+[[tool.poetry.source]]
+# name = "pytorch_cpu"
+# url = "https://download.pytorch.org/whl/cpu"
+# priority = "explicit"
+
+name = "pytorch_gpu"
+url = "https://download.pytorch.org/whl/cu124"
+priority = "explicit"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
