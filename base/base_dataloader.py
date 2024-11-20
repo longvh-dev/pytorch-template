@@ -33,13 +33,17 @@ class BaseDataLoader(DataLoader):
             valid_sampler (torch.utils.data.Sampler): Sampler for the validation data.
             init_kwargs (dict): Dictionary of initialization keyword arguments.
         """
+        self.dataset = dataset
         self.validation_split = validation_split
         self.shuffle = shuffle
 
         self.batch_idx = 0
         self.n_samples = len(dataset)
-
-        self.sampler, self.valid_sampler = self._split_sampler(self.validation_split)
+        self.sampler, self.valid_sampler = None, None
+        
+        
+        if not self.shuffle:
+            self.sampler, self.valid_sampler = self._split_sampler(self.validation_split)
 
         self.init_kwargs = {
             'dataset': dataset,
