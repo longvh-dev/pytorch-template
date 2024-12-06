@@ -12,3 +12,7 @@ logs/*
 data/*
 *.sqlite3
 *.lock
+
+# pixi environments
+.pixi
+*.egg-info
