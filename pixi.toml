@@ -1,0 +1,15 @@
+[project]
+authors = ["Vũ Hoàng Long <longvh.work@gmail.com>"]
+channels = ["conda-forge"]
+description = "Add a short description here"
+name = "Pytorch_Template"
+platforms = ["linux-64"]
+version = "0.1.0"
+
+[system-requirements]
+cuda = "12.4"
+
+[tasks]
+
+[dependencies]
+pytorch = ">=2.5.1,<3"
